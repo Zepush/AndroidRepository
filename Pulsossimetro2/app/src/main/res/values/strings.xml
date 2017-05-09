@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Pulsossimetro2</string>
+    <string name="Live_Pulsossimetro_String">Live Pulsossimetro</string>
+    <string name="Diario_personale_String">Diario Personale</string>
+    <string name="Storico_misure_String">Storico misure</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_led_control">ArduinoControl</string>
+</resources>
