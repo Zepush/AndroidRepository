@@ -24,7 +24,6 @@ public class DeviceListActivity extends Activity {
     
   
     // declare button for launching website and textview for connection status
-    Button tlbutton;
     TextView textView1;
     
     // EXTRA string to send on to mainactivity

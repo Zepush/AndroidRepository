@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "110827835764",
+    "firebase_url": "https://pulsossimetro-792dd.firebaseio.com",
+    "project_id": "pulsossimetro-792dd",
+    "storage_bucket": "pulsossimetro-792dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110827835764:android:a0595d0deeaa1fa6",
+        "android_client_info": {
+          "package_name": "zamataro.arduinoandroidmionew"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110827835764-66dgm4tl6csf7itg99aun73q2t2d59nv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zamataro.arduinoandroidmionew",
+            "certificate_hash": "be07c63e6c590ed6f50f3023b36b64d3c716cb5b"
+          }
+        },
+        {
+          "client_id": "110827835764-vomkm40lguetitv6h2assdtbsm32k177.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDKNQZlFYk1Ux3UUgxA3yFoCSS7evlZNg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110827835764-vomkm40lguetitv6h2assdtbsm32k177.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

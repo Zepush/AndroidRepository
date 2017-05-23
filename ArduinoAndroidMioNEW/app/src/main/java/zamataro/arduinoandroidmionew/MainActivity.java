@@ -1,4 +1,4 @@
-package zamataro.arduino_android_sensor_mio;
+package zamataro.arduinoandroidmionew;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,18 +11,27 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+import org.eazegraph.lib.charts.ValueLineChart;
+import org.eazegraph.lib.models.ValueLinePoint;
+import org.eazegraph.lib.models.ValueLineSeries;
+
+
+public class MainActivity extends AppCompatActivity {
 
     Button btnOn, btnOff;
     TextView txtString, txtStringLength, sensorView0, sensorView1, sensorView2, sensorView3;
     Handler bluetoothIn;
 
+    //public int FLAG = 1;
+    private static final String TAG = "MainActivity";
     final int handlerState = 0;        				 //used to identify handler message
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
@@ -34,7 +43,14 @@ public class MainActivity extends Activity {
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // String for MAC address
-    private static String address;
+    public static String address;
+
+    //Chart
+    ValueLineChart mCubicValueLineChart;
+    ValueLineSeries series = new ValueLineSeries();
+
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,10 +63,29 @@ public class MainActivity extends Activity {
         btnOff = (Button) findViewById(R.id.buttonOff);
         txtString = (TextView) findViewById(R.id.txtString);
         txtStringLength = (TextView) findViewById(R.id.testView1);
-        sensorView0 = (TextView) findViewById(R.id.sensorView0);
-        sensorView1 = (TextView) findViewById(R.id.sensorView1);
-        sensorView2 = (TextView) findViewById(R.id.sensorView2);
-        sensorView3 = (TextView) findViewById(R.id.sensorView3);
+        sensorView0 = (TextView) findViewById(R.id.SensorView0);
+        sensorView1 = (TextView) findViewById(R.id.SensorView1);
+        sensorView2 = (TextView) findViewById(R.id.SensorView2);
+        sensorView3 = (TextView) findViewById(R.id.SensorView3);
+        //chart
+        mCubicValueLineChart = (ValueLineChart) findViewById(R.id.cubiclinechart);
+
+            series.setColor(0xFF56B7F1);
+            series.addPoint(new ValueLinePoint("Jan", 2.4f));
+            series.addPoint(new ValueLinePoint("Feb", 3.4f));
+            series.addPoint(new ValueLinePoint("Mar", .4f));
+            series.addPoint(new ValueLinePoint("Apr", 1.2f));
+            series.addPoint(new ValueLinePoint("Mai", 2.6f));
+            series.addPoint(new ValueLinePoint("Jun", 1.0f));
+            series.addPoint(new ValueLinePoint("Jul", 3.5f));
+            series.addPoint(new ValueLinePoint("Aug", 2.4f));
+            series.addPoint(new ValueLinePoint("Sep", 2.4f));
+            series.addPoint(new ValueLinePoint("Oct", 3.4f));
+            series.addPoint(new ValueLinePoint("Nov", .4f));
+            series.addPoint(new ValueLinePoint("Dec", 1.3f));
+
+            mCubicValueLineChart.addSeries(series);
+            mCubicValueLineChart.startAnimation();
 
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -61,6 +96,7 @@ public class MainActivity extends Activity {
                     if (endOfLineIndex > 0) {                                           // make sure there data before ~
                         String dataInPrint = recDataString.substring(0, endOfLineIndex);    // extract string
                         txtString.setText("Data Received = " + dataInPrint);
+                        mConnectedThread.write("&");    // Send the message via bluetooth
                         int dataLength = dataInPrint.length();							//get length of data received
                         txtStringLength.setText("String Length = " + String.valueOf(dataLength));
 
@@ -84,24 +120,10 @@ public class MainActivity extends Activity {
             }
         };
 
+
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
 
-
-        // Set up onClick listeners for buttons to send 1 or 0 to turn on/off LED
-        btnOff.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                mConnectedThread.write("0");    // Send "0" via Bluetooth
-                Toast.makeText(getBaseContext(), "Turn off LED", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnOn.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                mConnectedThread.write("1");    // Send "1" via Bluetooth
-                Toast.makeText(getBaseContext(), "Turn on LED", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
@@ -114,16 +136,56 @@ public class MainActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+/*
+
+        bluetoothIn = new Handler() {
+
+            public void handleMessage(android.os.Message msg) {
+                if (msg.what == handlerState) {//if message is what we want
+                    String readMessage = (String) msg.obj;                                                                // msg.arg1 = bytes from connect thread
+                    recDataString.append(readMessage);
+                    //Log.d(TAG,recDataString.toString());
+                    //keep appending to string until ~
+                    int endOfLineIndex = recDataString.indexOf("~");                    // determine the end-of-line
+                    if (endOfLineIndex > 0) {                                           // make sure there data before ~
+                        String dataInPrint = recDataString.substring(0, endOfLineIndex);    // extract string
+                        txtString.setText("Data Received = " + dataInPrint);
+                        //mConnectedThread.write("&");    // Send the message via bluetooth
+                        int dataLength = dataInPrint.length();							//get length of data received
+                        txtStringLength.setText("String Length = " + String.valueOf(dataLength));
+
+                        if (recDataString.charAt(0) == '#')								//if it starts with # we know it is what we are looking for
+                        {
+                            String sensor0 = recDataString.substring(1, 5);             //get sensor value from string between indices 1-5
+                            String sensor1 = recDataString.substring(6, 10);            //same again...
+                            String sensor2 = recDataString.substring(11, 15);
+                            String sensor3 = recDataString.substring(16, 20);
+
+                            sensorView0.setText(" Sensor 0 Voltage = " + sensor0 + "V");	//update the textviews with sensor values
+                            sensorView1.setText(" Sensor 1 Voltage = " + sensor1 + "V");
+                            sensorView2.setText(" Sensor 2 Voltage = " + sensor2 + "V");
+                            sensorView3.setText(" Sensor 3 Voltage = " + sensor3 + "V");
+                        }
+                        recDataString.delete(0, recDataString.length()); 					//clear all string data
+                        // strIncom =" ";
+                        dataInPrint = " ";
+                    }
+                }
+            }
+        };
+*/
 
         //Get MAC address from DeviceListActivity via intent
         Intent intent = getIntent();
 
         //Get the MAC address from the DeviceListActivty via EXTRA
-        address = intent.getStringExtra(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-
+        address = intent.getStringExtra("EXTRA_DEVICE_ADDRESS");
+        //address = intent.getExtras().toString();
+        //Toast.makeText(getApplicationContext(), address, Toast.LENGTH_LONG).show();
         //create device and set the MAC address
-        BluetoothDevice device = btAdapter.getRemoteDevice(address);
-
+        BluetoothDevice device = btAdapter.getRemoteDevice(address.toString());
+        int a =1;
+        //BluetoothDevice device = btAdapter.getRemoteDevice(address);
         try {
             btSocket = createBluetoothSocket(device);
         } catch (IOException e) {
@@ -145,6 +207,23 @@ public class MainActivity extends Activity {
         mConnectedThread = new ConnectedThread(btSocket);
         mConnectedThread.start();
 
+
+
+
+        // Set up onClick listeners for buttons to send 1 or 0 to turn on/off LED
+        btnOff.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mConnectedThread.write("0");    // Send "0" via Bluetooth
+                Toast.makeText(getBaseContext(), "Turn off LED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnOn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mConnectedThread.write("1");    // Send "1" via Bluetooth
+                Toast.makeText(getBaseContext(), "Turn on LED", Toast.LENGTH_SHORT).show();
+            }
+        });
         //I send a character when resuming.beginning transmission to check device is connected
         //If it is not an exception will be thrown in the write method and finish() will be called
         mConnectedThread.write("x");

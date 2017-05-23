@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Live_Pulsossimetro_String">Live Pulsoximetro</string>
+    <string name="Diario_personale_String">Registro Privado</string>
+    <string name="Storico_misure_String">Historico Medidas</string>
+    <string name="none_paired">Ningun Dispositivo ha sido pareado</string>
+    <string name="Add_Note">Añadir Nota</string>
+    <string name="Add_Note_Toast">Nota correctamente añadida</string>
+</resources>
