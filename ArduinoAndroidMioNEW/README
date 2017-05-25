@@ -6,3 +6,6 @@ I used a HC-05/SPP-c Bluetooth module.
 To understand the Arduino code that I used check out my Arduino repository https://github.com/zamathebest/Arduino 
 
 I used a Firebase database to store the information that the patient want to put.
+
+If you have an Arduino and a HC05 you can try the app simulating a PPG signal with Matlab as I made to test the functionalities.
+Check out my matlab PPG Simulator on https://github.com/zamathebest/Matlab
