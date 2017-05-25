@@ -14,6 +14,7 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
         Button LiveButton=(Button) findViewById(R.id.Live);
         LiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +37,15 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentDiario=new Intent(getApplicationContext(), DiarioActivity.class);
                 startActivity(intentDiario);
+            }
+        });
+
+        Button ConfigButton = (Button) findViewById(R.id.ConfigIDBtn);
+        ConfigButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentConfig = new Intent(getApplicationContext(), ConfigActivity.class);
+                startActivity(intentConfig);
             }
         });
 

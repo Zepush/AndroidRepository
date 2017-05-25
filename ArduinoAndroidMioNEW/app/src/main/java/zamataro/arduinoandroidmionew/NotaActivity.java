@@ -1,13 +1,10 @@
 package zamataro.arduinoandroidmionew;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DialogTitle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -16,13 +13,14 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Map;
 
+
 public class NotaActivity extends AppCompatActivity {
 
+    public String key, title, message;
+    public String TAG = "TAG";
     private Firebase mRef;
     private TextView mTitle;
     private TextView mMessage;
-    public String key, title, message;
-    public String TAG="TAG";
     private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

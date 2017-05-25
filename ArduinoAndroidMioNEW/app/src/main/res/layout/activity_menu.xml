@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,48 +8,59 @@
         android:id="@+id/textView"
         android:layout_width="368dp"
         android:layout_height="109dp"
+        android:layout_alignLeft="@+id/Live"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/Live"
         android:text="Pulsossimetro By Giorgio Zamataro"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/Live"
-        android:layout_alignStart="@+id/Live" />
+        tools:layout_editor_absoluteY="8dp" />
     <Button
         android:id="@+id/Live"
         android:layout_width="368dp"
         android:layout_height="48dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
         android:text="@string/Live_Pulsossimetro_String"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="125dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        tools:layout_editor_absoluteY="125dp" />
 
     <Button
         android:id="@+id/Storico"
         android:layout_width="368dp"
         android:layout_height="48dp"
+        android:layout_alignLeft="@+id/Live"
+        android:layout_alignStart="@+id/Live"
+        android:layout_below="@+id/Live"
+        android:layout_marginTop="42dp"
         android:text="@string/Storico_misure_String"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="215dp"
-        android:layout_marginTop="42dp"
-        android:layout_below="@+id/Live"
-        android:layout_alignLeft="@+id/Live"
-        android:layout_alignStart="@+id/Live" />
+        tools:layout_editor_absoluteY="215dp" />
+
+    <Button
+        android:id="@+id/ConfigIDBtn"
+        android:layout_width="368dp"
+        android:layout_height="48dp"
+        android:layout_alignLeft="@+id/Diario"
+        android:layout_alignStart="@+id/Diario"
+        android:layout_below="@+id/Diario"
+        android:layout_marginTop="40dp"
+        android:text="@string/Configuration"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="305dp" />
 
     <Button
         android:id="@+id/Diario"
         android:layout_width="368dp"
         android:layout_height="48dp"
+        android:layout_alignLeft="@+id/Storico"
+        android:layout_alignStart="@+id/Storico"
+        android:layout_below="@+id/Storico"
+        android:layout_marginTop="42dp"
         android:text="@string/Diario_personale_String"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="305dp"
-        android:layout_marginTop="42dp"
-        android:layout_below="@+id/Storico"
-        android:layout_alignLeft="@+id/Storico"
-        android:layout_alignStart="@+id/Storico" />
-
+        tools:layout_editor_absoluteY="305dp" />
 
 
 </RelativeLayout>

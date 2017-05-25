@@ -1,6 +1,5 @@
 package zamataro.arduinoandroidmionew;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -14,28 +13,38 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import java.util.Set;
 
-import static android.R.attr.button;
+import java.util.Set;
 
 
 public class DeviceListActivity extends AppCompatActivity {
     // Debugging for LOGCAT
     private static final String TAG = "DeviceListActivity";
     private static final boolean D = true;
+    // EXTRA string to send on to mainactivity
+    public static String EXTRA_DEVICE_ADDRESS = "device_address";
     public int FLAG = 0;
-
     // declare button for launching website and textview for connection status
     TextView textView1;
     Button ConnectLaterBtn;
-
-    // EXTRA string to send on to mainactivity
-    public static String EXTRA_DEVICE_ADDRESS = "device_address";
-
     // Member fields
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
+    // Set up on-click listener for the list (nicked this - unsure)
+    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+
+            textView1.setText("Connecting...");
+            // Get the device MAC address, which is the last 17 chars in the View
+            String info = ((TextView) v).getText().toString();
+            String address = info.substring(info.length() - 17);
+
+            // Make an intent to start next activity while taking an extra which is the MAC address.
+            Intent i = new Intent(DeviceListActivity.this, MainActivity.class);
+            i.putExtra("EXTRA_DEVICE_ADDRESS", address);
+            startActivity(i);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,18 @@ public class DeviceListActivity extends AppCompatActivity {
         //ConnectLaterBtn = (Button) findViewById(R.id.ConnectLater);
 
     }
+
+    //Set up on-click listener for Connect later Button
+   /* private View.OnClickListener VaiAMain = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            FLAG = 1;
+            Intent GotoMain = new Intent(DeviceListActivity.this, MainActivity.class);
+            startActivity(GotoMain);
+            GotoMain.putExtra("FLAG", FLAG);
+        }
+    };*/
 
     @Override
     public void onResume()
@@ -84,34 +105,6 @@ public class DeviceListActivity extends AppCompatActivity {
             mPairedDevicesArrayAdapter.add(noDevices);
         }
     }
-
-    //Set up on-click listener for Connect later Button
-   /* private View.OnClickListener VaiAMain = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            FLAG = 1;
-            Intent GotoMain = new Intent(DeviceListActivity.this, MainActivity.class);
-            startActivity(GotoMain);
-            GotoMain.putExtra("FLAG", FLAG);
-        }
-    };*/
-
-    // Set up on-click listener for the list (nicked this - unsure)
-    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
-
-            textView1.setText("Connecting...");
-            // Get the device MAC address, which is the last 17 chars in the View
-            String info = ((TextView) v).getText().toString();
-            String address = info.substring(info.length() - 17);
-
-            // Make an intent to start next activity while taking an extra which is the MAC address.
-            Intent i = new Intent(DeviceListActivity.this, MainActivity.class);
-            i.putExtra("EXTRA_DEVICE_ADDRESS", address);
-            startActivity(i);
-        }
-    };
 
     private void checkBTState() {
         // Check device has Bluetooth and that it is turned on
