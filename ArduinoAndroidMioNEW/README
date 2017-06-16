@@ -9,3 +9,38 @@ I used a Firebase database to store the information that the patient want to put
 
 If you have an Arduino and a HC05 you can try the app simulating a PPG signal with Matlab as I made to test the functionalities.
 Check out my matlab PPG Simulator on https://github.com/zamathebest/Matlab
+
+Este Proyecto hace parte del trabajo de Giorgio Zamataro en la asignatura de telemedicina en la Universidad de Sevilla a.a. 2016/2017
+
+Para ejecutar el proyecto se necesita:
+
+Hardware:
+-1 Arduino (mas cables)
+-1 Modulo Bluetooth HC-05
+-Movil Android con Buetotooth
+-1 Ordenador
+
+Software:
+-Android Studio
+-Arduino IDE
+-Matlab
+
+Por primero arrancamos Android Studio, creamos el apk y enviamola al movil
+Pues arrancamos Arduino y subimos el proyecto arduino
+Y por ultimo Arrancamo Matlab y empezamos a leer nuestra señal
+
+Que hace esta aplicacion?
+Esta aplicacion simula a travez de Matlab una señal fotopletismografica y la envia tramite serial a Arduino que a travez del bluetooth la envia al movil
+
+El proyecto esta hecho para añadir una interfaz para movil a un sensor de pulsioximetria en fase de desarrollo en la Universidad de Sevilla.
+
+La aplicacion android està estructurada asì:
+-Pantalla de Login: permite de hacer el login o de registrarse a mi servidor web en Firebase
+-Menu: se pueden pulsar 4 botones:
+	1)Live Pulsossimetro, para ver en tiempo real las medidas enviadas por el bluetooth
+	2)Historio Medidas, que muestra una media de todas las medidas diarias tomadas
+	3)Diario Personal, para añadir notas sobre tu proprio estado de salud
+	4)Ajustes de usuario, proporciona toda las herramientas para gestionar el proprio Account
+
+Las informaciones grabadas en el Historico Medidas y las informaciones grabadas en Diario personal son enviada a mi server Firebase https://pulsossimetro-792dd.firebaseio.com/ 
+
